@@ -18,11 +18,11 @@ public class StatisticalHelper {
 		SummaryStatistics stats = new SummaryStatistics();
 		//		TransactionHelper thelper = new TransactionHelper();
 		//		transactions = thelper.populateArrayList(transactions);
-		//transactions.forEach(t -> stats.addValue(Double.parseDouble(t.getAmount())));
-		for (Transaction transaction : transactions) {
-			if(DateDifferentHelper.differenceBeteweenDates(transaction.getTimeStamp()))
-				stats.addValue(Double.parseDouble(transaction.getAmount()));
-		}
+		transactions.forEach(t -> stats.addValue(Double.parseDouble(t.getAmount())));
+//		for (Transaction transaction : transactions) {
+//			if(DateDifferentHelper.differenceBeteweenDates(transaction.getTimestamp()))
+//				stats.addValue(Double.parseDouble(transaction.getAmount()));
+//		}
 		return getStatistic(stats, transactions);
 	}
 

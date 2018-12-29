@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.n26.rest.api.helper.StatisticalHelper;
+import com.n26.rest.api.helper.TransactionHelper;
 
 @RestController
 public class TransactionController {
@@ -39,8 +40,10 @@ public class TransactionController {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public ResponseEntity<String> deleteAllTransactions() {
-		transactions.clear();
-		return ResponseEntity.ok("Transactions deleted");
+		if(TransactionHelper.deleteTransactions(transactions))
+			return ResponseEntity.ok("Transactions deleted");
+		else
+			return ResponseEntity.status(204).body("Some error happend deleting transactions");
 	}
 
 //	@RequestMapping(method = RequestMethod.POST, value = "/transactions")
@@ -75,7 +78,7 @@ public class TransactionController {
 	@POST
 	public ResponseEntity<Transaction> create(@RequestBody Transaction transaction) {
 		try {
-			if (transaction.isAllowed(transaction.getTimeStamp())) {
+			if (transaction.isAllowed(transaction.getTimestamp())) {
 				transactions.add(transaction);
 				transactions.forEach(t -> System.out.println(t));
 			} else {

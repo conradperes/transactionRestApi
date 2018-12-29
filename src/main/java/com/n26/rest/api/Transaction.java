@@ -12,7 +12,7 @@ public class Transaction implements Serializable {
 	private static final String UTC = "UTC";
 	private static final long serialVersionUID = -4524081563985383524L;
 	private String amount;
-	private String timeStamp;
+	private String timestamp;
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS'Z'");
 
 	public Transaction() {
@@ -22,21 +22,21 @@ public class Transaction implements Serializable {
 		super();
 		this.amount = amount;
 		formatter.setTimeZone(TimeZone.getTimeZone(UTC));
-		this.timeStamp = formatter.format(timeStamp);
+		this.timestamp = formatter.format(timeStamp);
 	}
 	public Transaction(String amount, String timeStamp) throws ParseException {
 		super();
 		this.amount = amount;
 		formatter.setTimeZone(TimeZone.getTimeZone(UTC));
-		this.timeStamp = formatter.format(timeStamp);
+		this.timestamp = formatter.format(timeStamp);
 	}
 
-	public String getTimeStamp() {
-		return timeStamp;
+	public String getTimestamp() {
+		return timestamp;
 	}
 
-	public void setTimeStamp(String timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public String getAmount() {
@@ -50,7 +50,7 @@ public class Transaction implements Serializable {
 
 
 	public void setTimeStamp(Date timeStamp) throws ParseException {
-		this.timeStamp = formatter.format(timeStamp);
+		this.timestamp = formatter.format(timeStamp);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class Transaction implements Serializable {
 		sb.append("{\n" + "    \"amount\":");
 		sb.append("\""+amount+"\"");
 		sb.append(",\"timeStamp\": ");
-		sb.append("\""+timeStamp+"\"");
+		sb.append("\""+timestamp+"\"");
 		sb.append("}");
 		return sb.toString();
 	}
@@ -69,7 +69,7 @@ public class Transaction implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
-		result = prime * result + ((timeStamp == null) ? 0 : timeStamp.hashCode());
+		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
 		return result;
 	}
 
@@ -87,10 +87,10 @@ public class Transaction implements Serializable {
 				return false;
 		} else if (!amount.equals(other.amount))
 			return false;
-		if (timeStamp == null) {
-			if (other.timeStamp != null)
+		if (timestamp == null) {
+			if (other.timestamp != null)
 				return false;
-		} else if (!timeStamp.equals(other.timeStamp))
+		} else if (!timestamp.equals(other.timestamp))
 			return false;
 		return true;
 	}

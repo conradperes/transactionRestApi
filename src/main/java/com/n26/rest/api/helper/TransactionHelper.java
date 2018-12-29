@@ -67,7 +67,7 @@ public class TransactionHelper {
 	}
 
 	private void populateJava8() throws ParseException {
-		SortedSet<Transaction> transactionsByTimestamp = new TreeSet<>(Comparator.comparing(Transaction::getTimeStamp));
+		SortedSet<Transaction> transactionsByTimestamp = new TreeSet<>(Comparator.comparing(Transaction::getTimestamp));
 
 		transactionsByTimestamp.add(new Transaction("1", new Date()));
 		transactionsByTimestamp.add(new Transaction("2", new Date()));
@@ -90,7 +90,7 @@ public class TransactionHelper {
 
 	private void populateConcurrentSkipListSet() throws ParseException {
 		ConcurrentSkipListSet<Transaction> transactionsByTimestamp = new ConcurrentSkipListSet<>(
-				Comparator.comparing(Transaction::getTimeStamp));
+				Comparator.comparing(Transaction::getTimestamp));
 
 		transactionsByTimestamp.add(new Transaction("1", new Date()));
 		transactionsByTimestamp.add(new Transaction("2", new Date()));
@@ -152,14 +152,14 @@ public class TransactionHelper {
 	public void sortByAmount(List<Transaction> transactionsByAmout) {
 		transactionsByAmout = transactionsByAmout.stream().sorted(Comparator.comparing(Transaction::getAmount))
 				.collect(Collectors.toList());
-		transactionsByAmout.forEach(e -> System.out.println("AMOUNT:" + e.getAmount() + ", DATE:" + e.getTimeStamp()));
+		transactionsByAmout.forEach(e -> System.out.println("AMOUNT:" + e.getAmount() + ", DATE:" + e.getTimestamp()));
 	}
 
 	public void sortByTimeStamp(List<Transaction> transactionsByTimestamp) {
 		transactionsByTimestamp = transactionsByTimestamp.stream()
-				.sorted(Comparator.comparing(Transaction::getTimeStamp)).collect(Collectors.toList());
+				.sorted(Comparator.comparing(Transaction::getTimestamp)).collect(Collectors.toList());
 		transactionsByTimestamp
-				.forEach(e -> System.out.println("AMOUNT:" + e.getAmount() + ", DATE:" + e.getTimeStamp()));
+				.forEach(e -> System.out.println("AMOUNT:" + e.getAmount() + ", DATE:" + e.getTimestamp()));
 	}
 
 }
