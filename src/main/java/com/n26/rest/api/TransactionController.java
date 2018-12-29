@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.n26.rest.api.helper.StatisticalHelper;
 
 @RestController
 public class TransactionController {
@@ -28,8 +28,8 @@ public class TransactionController {
 	@GET
 	@Produces("application/json")
 	@RequestMapping("/statistics")
-	public List<Transaction> getStatisticTransactionLast60Seconds() {
-		return new HelperTransaction().populateArrayList(transactions);
+	public Statistic getStatisticTransactionLast60Seconds() {
+		return new StatisticalHelper().getSummary(transactions);
 	}
 
 	@POST
@@ -45,7 +45,7 @@ public class TransactionController {
 	@Produces("application/json")
 	@Consumes("application/json")
 	public ResponseEntity<String> deleteAllTransactions() {
-		// transactionService.deleteAll();
+		transactions.clear();
 		return ResponseEntity.ok("Transactions deleted");
 	}
 

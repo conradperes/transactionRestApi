@@ -1,4 +1,4 @@
-package com.n26.rest.api;
+package com.n26.rest.api.helper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,12 +9,14 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
-public class HelperTransaction {
+import com.n26.rest.api.Transaction;
+
+public class TransactionHelper {
 	//SortedSet<Transaction> transactions = new TreeSet<Transaction>();
 
 	public static void main(String[] args) {
 		//new HelperTransaction().populateJava8();
-		new HelperTransaction().populateArrayList();
+		new TransactionHelper().populateArrayList();
 
 	}
 
