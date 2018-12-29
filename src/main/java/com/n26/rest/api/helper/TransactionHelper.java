@@ -46,6 +46,13 @@ public class TransactionHelper {
 //		}
 
 	}
+	
+	public static boolean deleteTransactions(List<Transaction> transactions) {
+		transactions.clear();
+		if(transactions.isEmpty())
+			return true;
+		return false;
+	}
 
 	private void populate() {
 //		Transaction t = new Transaction();
@@ -105,7 +112,7 @@ public class TransactionHelper {
 		transactionsByAmout.forEach(System.out::println);
 	}
 
-	private void populateArrayList() throws ParseException {
+	public List<Transaction> populateArrayList() throws ParseException {
 		List<Transaction> transactionsByTimestamp = new ArrayList<>();
 
 		transactionsByTimestamp.add(new Transaction("1", new Date()));
@@ -125,6 +132,7 @@ public class TransactionHelper {
 		transactionsByAmout.add(new Transaction("5", new Date()));
 		System.out.println("Transactions by  Amount: ");
 		sortByAmount(transactionsByAmout);
+		return transactionsByTimestamp;
 	}
 
 	public List<Transaction> populateArrayList(List<Transaction> transactionsByTimestamp) throws ParseException {

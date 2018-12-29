@@ -21,6 +21,12 @@ public class Transaction implements Serializable {
 		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
 		this.timeStamp = formatter.format(timeStamp);
 	}
+	public Transaction(String amount, String timeStamp) throws ParseException {
+		super();
+		this.amount = amount;
+		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+		this.timeStamp = formatter.format(timeStamp);
+	}
 
 	public String getTimeStamp() {
 		return timeStamp;
