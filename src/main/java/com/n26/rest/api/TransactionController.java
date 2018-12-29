@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 
 import org.springframework.http.ResponseEntity;
@@ -42,29 +43,47 @@ public class TransactionController {
 		return ResponseEntity.ok("Transactions deleted");
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "/transactions")
+//	@RequestMapping(method = RequestMethod.POST, value = "/transactions")
+//	@Produces("application/json")
+//	@Consumes("application/json")
+//	public ResponseEntity<Transaction> receiveData(@RequestBody Transaction transaction) {
+//
+//		// ObjectMapper mapper = new ObjectMapper();
+////		 Transaction transaction = null;
+//		try {
+////			transactions.add(transaction);
+////			transactions.forEach(t -> System.out.println(t));
+//
+//			// transaction = mapper.readValue(transaction.toString(), Transaction.class);
+//			if (transaction.isAllowed(transaction.getTimeStamp())) {
+//				transactions.add(transaction);
+//				transactions.forEach(t -> System.out.println(t));
+//			}else {
+//				return ResponseEntity.status(204).body(transaction);
+//			}
+//			// mapper.writer();
+//		} catch (Exception e) {
+//			return ResponseEntity.badRequest().body(transaction);
+//		}
+//
+//		return ResponseEntity.created(URI.create("/" + transaction.getAmount())).build();
+//	}
+	
+	@RequestMapping(value = "/transactions")
 	@Produces("application/json")
 	@Consumes("application/json")
-	public ResponseEntity<Transaction> receiveData(@RequestBody Transaction transaction) {
-
-		// ObjectMapper mapper = new ObjectMapper();
-//		 Transaction transaction = null;
+	@POST
+	public ResponseEntity<Transaction> create(@RequestBody Transaction transaction) {
 		try {
-//			transactions.add(transaction);
-//			transactions.forEach(t -> System.out.println(t));
-
-			// transaction = mapper.readValue(transaction.toString(), Transaction.class);
 			if (transaction.isAllowed(transaction.getTimeStamp())) {
 				transactions.add(transaction);
 				transactions.forEach(t -> System.out.println(t));
-			}else {
+			} else {
 				return ResponseEntity.status(204).body(transaction);
 			}
-			// mapper.writer();
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(transaction);
 		}
-
 		return ResponseEntity.created(URI.create("/" + transaction.getAmount())).build();
 	}
 }

@@ -4,27 +4,30 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import com.n26.rest.api.helper.DateDifferentHelper;
 public class Transaction implements Serializable {
 	
+	private static final String UTC = "UTC";
 	private static final long serialVersionUID = -4524081563985383524L;
 	private String amount;
 	private String timeStamp;
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS'Z'");
 
+	public Transaction() {
+		super();
+	}
 	public Transaction(String amount, Date timeStamp) throws ParseException {
 		super();
 		this.amount = amount;
-		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+		formatter.setTimeZone(TimeZone.getTimeZone(UTC));
 		this.timeStamp = formatter.format(timeStamp);
 	}
 	public Transaction(String amount, String timeStamp) throws ParseException {
 		super();
 		this.amount = amount;
-		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+		formatter.setTimeZone(TimeZone.getTimeZone(UTC));
 		this.timeStamp = formatter.format(timeStamp);
 	}
 
@@ -93,7 +96,7 @@ public class Transaction implements Serializable {
 	}
 	
     public boolean isAllowed(String date) {
-		return new DateDifferentHelper().differenceBeteweenDates(date);
+		return DateDifferentHelper.differenceBeteweenDates(date);
     }
 
 }
