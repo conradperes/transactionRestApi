@@ -6,9 +6,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,16 +27,11 @@ public class TransactionController {
 	@Produces("application/json")
 	@RequestMapping("/statistics")
 	public Statistic getStatisticTransactionLast60Seconds() {
-		return new StatisticalHelper().getSummary(transactions);
-	}
-
-	@POST
-	@Produces("application/json")
-	@Consumes("application/json")
-	public Response addBook(Transaction transaction) {
-		transactions.add(transaction);
-		transactions.forEach(t -> System.out.println(t));
-		return Response.created(URI.create("/" + transaction.getAmount())).build();
+		if(!transactions.isEmpty())
+			return new StatisticalHelper().getSummary(transactions);
+		else
+			return StatisticalHelper.resetStatistics();
+			
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/transactions")
@@ -54,21 +47,24 @@ public class TransactionController {
 	@Consumes("application/json")
 	public ResponseEntity<Transaction> receiveData(@RequestBody Transaction transaction) {
 
-		//ObjectMapper mapper = new ObjectMapper();
+		// ObjectMapper mapper = new ObjectMapper();
 //		 Transaction transaction = null;
 		try {
 //			transactions.add(transaction);
 //			transactions.forEach(t -> System.out.println(t));
 
-			//transaction = mapper.readValue(transaction.toString(), Transaction.class);
-			transactions.add(transaction);
-			transactions.forEach(t -> System.out.println(t));
-			//mapper.writer();
+			// transaction = mapper.readValue(transaction.toString(), Transaction.class);
+			if (transaction.isAllowed(transaction.getTimeStamp())) {
+				transactions.add(transaction);
+				transactions.forEach(t -> System.out.println(t));
+			}else {
+				return ResponseEntity.status(204).body(transaction);
+			}
+			// mapper.writer();
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(transaction);
 		}
 
-		System.out.println(transaction);
 		return ResponseEntity.created(URI.create("/" + transaction.getAmount())).build();
 	}
 }

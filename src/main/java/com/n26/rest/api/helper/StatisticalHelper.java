@@ -18,7 +18,11 @@ public class StatisticalHelper {
 		SummaryStatistics stats = new SummaryStatistics();
 		//		TransactionHelper thelper = new TransactionHelper();
 		//		transactions = thelper.populateArrayList(transactions);
-		transactions.forEach(t -> stats.addValue(Double.parseDouble(t.getAmount())));
+		//transactions.forEach(t -> stats.addValue(Double.parseDouble(t.getAmount())));
+		for (Transaction transaction : transactions) {
+			if(DateDifferentHelper.differenceBeteweenDates(transaction.getTimeStamp()))
+				stats.addValue(Double.parseDouble(transaction.getAmount()));
+		}
 		return getStatistic(stats, transactions);
 	}
 
@@ -31,17 +35,26 @@ public class StatisticalHelper {
 		s.setCount(stats.getN());
 		return s;
 	}
-
-	private String getJson(SummaryStatistics stats, List<Transaction> transactions) {
-		StringBuilder json = new StringBuilder("{");
-		json.append("\"sum\":" + "\"" + stats.getSum() + "\"");
-		json.append(",\"avg\":" + "\"" + getAverage(transactions) + "\"");
-		json.append(",\"max\":" + "\"" + stats.getMax() + "\"");
-		json.append(",\"min\":" + "\"" + stats.getMin() + "\"");
-		json.append(",\"count\":" + stats.getN());
-		json.append("}");
-		return json.toString();
+	public static Statistic resetStatistics() {
+		Statistic s = new Statistic();
+		s.setSum(0);
+		s.setAvg(0);
+		s.setMax(0);
+		s.setMin(0);
+		s.setCount(0);
+		return s;
 	}
+
+//	private String getJson(SummaryStatistics stats, List<Transaction> transactions) {
+//		StringBuilder json = new StringBuilder("{");
+//		json.append("\"sum\":" + "\"" + stats.getSum() + "\"");
+//		json.append(",\"avg\":" + "\"" + getAverage(transactions) + "\"");
+//		json.append(",\"max\":" + "\"" + stats.getMax() + "\"");
+//		json.append(",\"min\":" + "\"" + stats.getMin() + "\"");
+//		json.append(",\"count\":" + stats.getN());
+//		json.append("}");
+//		return json.toString();
+//	}
 
 	private double getAverage(List<Transaction> transactions2) {
 		double sum = 0; // average will have decimal point
