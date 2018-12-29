@@ -83,7 +83,7 @@ public class TransactionControllerTest {
 		Transaction t;
 		try {
 			t = new Transaction("7777", new Date());
-			Assert.assertFalse("This transaction is not allowed", t.isAllowed(t.getTimeStamp()));
+			Assert.assertFalse("This transaction is not allowed", t.isAllowed(t.getTimestamp()));
 		} catch (ParseException e) {
 			Assert.fail();
 			e.printStackTrace();
