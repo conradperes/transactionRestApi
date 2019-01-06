@@ -3,7 +3,10 @@ package com.n26.tests;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,29 +15,36 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.n26.rest.api.Application;
 import com.n26.rest.api.Transaction;
 import com.n26.rest.api.helper.DateDifferentHelper;
-import com.n26.rest.api.helper.StatisticalHelper;
 import com.n26.rest.api.helper.TimeMilisecondHelper;
 import com.n26.rest.api.helper.TransactionHelper;
 
 import junit.framework.Assert;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TransactionControllerTest.class)
+@SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 public class TransactionControllerTest {
-	private static final String ACTUAL_DATE = "2018-12-29T17:14:59.312Z";
+	private static final String ACTUAL_DATE = TimeMilisecondHelper.fromMilisecondsToDate();
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
 	public void statisticalHelperTest() throws Exception {
 
-//    	this.mockMvc.perform(get("/statistics")).andDo(print()).andExpect(status().isOk())
-//      .andExpect(jsonPath("$.content").value("Hello, World!"));
-		List<Transaction> transactions = populate();
-		Assert.assertNotNull(new StatisticalHelper().getSummary(transactions));
+    	this.mockMvc.perform(get("/statistics")).andDo(print()).andExpect(status().isOk() );
+//      .andExpect(jsonPath("$.content").value("{\n" + 
+//      		"    \"sum\": 0,\n" + 
+//      		"    \"avg\": 0,\n" + 
+//      		"    \"max\": 0,\n" + 
+//      		"    \"min\": 0,\n" + 
+//      		"    \"count\": 0\n" + 
+//      		"}")
+//    		  );
+//		List<Transaction> transactions = populate();
+//		Assert.assertNotNull(new StatisticalHelper().getSummary(transactions));
 	}
 
 	private List<Transaction> populate() throws ParseException {
