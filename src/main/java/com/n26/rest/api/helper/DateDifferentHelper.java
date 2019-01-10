@@ -39,7 +39,11 @@ public class DateDifferentHelper {
 			if(		diffDays == 0 		&&
 					diffMinutes == 0 	&&
 					diffHours == 0  	&&
-					diffSeconds <= 60		)
+					diffSeconds <= 60 	||
+					diffDays <= 0 		||
+					diffMinutes <= 0		||
+					diffHours <= 0		||
+					diffSeconds <= 0)
 				return true;
 
 		} catch (Exception e) {

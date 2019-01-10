@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class TimeMilisecondHelper {
+	public static void main(String[] args) {
+		System.out.println(fromMilisecondsToDate());
+	}
 	public static String fromMilisecondsToDate() {
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS'Z'");
 		// Get date and time information in milliseconds

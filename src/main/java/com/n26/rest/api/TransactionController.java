@@ -1,7 +1,9 @@
 package com.n26.rest.api;
 
 import java.net.URI;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -22,7 +24,8 @@ import com.n26.rest.api.helper.TransactionHelper;
 public class TransactionController {
 	List<Transaction> transactions = new ArrayList<>();
 
-	public TransactionController() {
+	public TransactionController() throws ParseException {
+		transactions.add(new Transaction("777.77", new Date()));
 	}
 
 	@GET
@@ -35,7 +38,16 @@ public class TransactionController {
 			return StatisticalHelper.resetStatistics();
 			
 	}
-
+	
+	@RequestMapping(method = RequestMethod.GET, produces="application/json", value = "/all")
+	public List<Transaction> getAllTransactions() {
+		if(!transactions.isEmpty())
+			return transactions;
+		else
+			return new ArrayList<>();
+	}
+	
+	
 	@RequestMapping(method = RequestMethod.DELETE, value = "/transactions")
 	@Produces("application/json")
 	@Consumes("application/json")
